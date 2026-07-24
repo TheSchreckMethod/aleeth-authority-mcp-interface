@@ -5,10 +5,11 @@
     "title": "ALEETH Authority MCP",
     "endpoint": "https://mcp.aleeth.com/mcp",
     "reported_name": "ALEETH Authority MCP",
-    "reported_version": "2.0.0b1",
-    "mcp_protocol_version": "2025-06-18"
+    "reported_version": "1.1.0",
+    "mcp_protocol_version": null,
+    "source": "local-prerelease"
   },
-  "tool_count": 36,
+  "tool_count": 37,
   "tools": [
     {
       "name": "approve_rule_candidate",
@@ -23,8 +24,24 @@
         "required": [
           "candidate_id"
         ],
-        "type": "object",
-        "title": "approve_rule_candidateArguments"
+        "title": "approve_rule_candidateArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Approve Rule Candidate",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "rule:govern",
+          "cost_class": "write",
+          "default_charge_weight": 8
+        }
       }
     },
     {
@@ -52,8 +69,24 @@
         "required": [
           "incident_id"
         ],
-        "type": "object",
-        "title": "close_incidentArguments"
+        "title": "close_incidentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Close Incident",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "incident:manage",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
@@ -74,8 +107,24 @@
           "incident_id",
           "containment_action"
         ],
-        "type": "object",
-        "title": "contain_incidentArguments"
+        "title": "contain_incidentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Contain Incident",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "incident:manage",
+          "cost_class": "write",
+          "default_charge_weight": 8
+        }
       }
     },
     {
@@ -120,8 +169,24 @@
           "incident_id",
           "disclosed"
         ],
-        "type": "object",
-        "title": "disclose_incidentArguments"
+        "title": "disclose_incidentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Record Incident Disclosure",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "incident:manage",
+          "cost_class": "write",
+          "default_charge_weight": 8
+        }
       }
     },
     {
@@ -149,13 +214,29 @@
         "required": [
           "finding_id"
         ],
-        "type": "object",
-        "title": "dismiss_findingArguments"
+        "title": "dismiss_findingArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Dismiss Finding",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "disposition:manage",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
       "name": "equip_agent",
-      "description": "Equip a certified graduate with an ICA-compliant skill or tool from the Tools & Skills Registry. Fail-closed at the plane: a non-compliant entry, or a clearance / lane / credential the agent does not hold, is REFUSED with the reason; a grant is sealed with an academy_equip receipt before it is written. Identify by did or agent name; entry_kind is 'skill' or 'tool'; dry_run reports the verdict without granting. Governed write; requires an academy-equip scope.",
+      "description": "Equip a certified graduate with a registry skill or tool. Fail-closed: a non-compliant entry or an unmet clearance, lane, or credential is REFUSED with the reason, and every grant is receipted before it is written. entry_kind is 'skill' or 'tool'; dry_run previews the verdict. Governed write; requires an academy-equip scope.",
       "input_schema": {
         "properties": {
           "entry_kind": {
@@ -212,8 +293,24 @@
           "entry_kind",
           "entry_key"
         ],
-        "type": "object",
-        "title": "equip_agentArguments"
+        "title": "equip_agentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Equip Agent",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "academy:equip",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
@@ -241,13 +338,29 @@
         "required": [
           "finding_id"
         ],
-        "type": "object",
-        "title": "escalate_findingArguments"
+        "title": "escalate_findingArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Escalate Finding",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "disposition:manage",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
       "name": "get_academy_file",
-      "description": "Read a certified graduate's attached Academy file by DID: identity, training record (clearance, certified skills, AIS lanes), equipment (registry skills + tools), the certificate, and every independently verifiable receipt. Accepts a full did:web or a bare agent id; a DID that has not graduated returns NOT_FOUND. Read-only, fully governed.",
+      "description": "Read a certified graduate's Academy file by DID: identity, training record, equipment, certificate, and every verifiable receipt. Accepts a full did:web or a bare agent id; not graduated returns NOT_FOUND. Read-only, fully governed.",
       "input_schema": {
         "properties": {
           "did": {
@@ -258,17 +371,48 @@
         "required": [
           "did"
         ],
-        "type": "object",
-        "title": "get_academy_fileArguments"
+        "title": "get_academy_fileArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Academy File by DID",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "registry:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
       "name": "get_agent_registry",
-      "description": "Read the ALEETH AI Agent Registry: the official roster of ALEETH Academy certified graduates, each keyed by an immutable did:web identity with a signed Academy file. Public descriptor plus the graduate count. Read-only, fully governed.",
+      "description": "Read the ALEETH AI Agent Registry: certified Academy graduates keyed by immutable did:web identities, with the public descriptor and graduate count. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "type": "object",
-        "title": "get_agent_registryArguments"
+        "title": "get_agent_registryArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Agent Registry",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "registry:read",
+          "cost_class": "read",
+          "default_charge_weight": 1,
+          "cacheable_ttl_s": 120
+        }
       }
     },
     {
@@ -284,8 +428,23 @@
         "required": [
           "identity_id"
         ],
-        "type": "object",
-        "title": "get_agent_scopeArguments"
+        "title": "get_agent_scopeArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Agent Authority Scope",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "authority:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -293,8 +452,24 @@
       "description": "Read ATC sensor coverage status: which sensors are reporting and healthy. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "type": "object",
-        "title": "get_atc_coverageArguments"
+        "title": "get_atc_coverageArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "ATC Sensor Coverage",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "coverage:read",
+          "cost_class": "read",
+          "default_charge_weight": 1,
+          "cacheable_ttl_s": 15
+        }
       }
     },
     {
@@ -302,8 +477,23 @@
       "description": "Read the ATC engine self-state: is the sensor polling loop alive and ticking. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "type": "object",
-        "title": "get_atc_healthArguments"
+        "title": "get_atc_healthArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "ATC Engine Health",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "coverage:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -317,8 +507,58 @@
             "type": "integer"
           }
         },
-        "type": "object",
-        "title": "get_atc_incidentsArguments"
+        "title": "get_atc_incidentsArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "ATC Incidents",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "incidents:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
+      }
+    },
+    {
+      "name": "get_atc_overview",
+      "description": "Read ATC engine health, sensor coverage, recent incidents, and recent raw signals in ONE governed call (the four reads run concurrently; one Rail Guard authorize, one receipt). A failed section returns status 'unavailable' and the receipt names it. Charges both the coverage and incidents budgets. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "incident_limit": {
+            "default": 10,
+            "title": "Incident Limit",
+            "type": "integer"
+          },
+          "signal_limit": {
+            "default": 20,
+            "title": "Signal Limit",
+            "type": "integer"
+          }
+        },
+        "title": "get_atc_overviewArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "ATC Overview (fan-out)",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "incidents:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -332,8 +572,23 @@
             "type": "integer"
           }
         },
-        "type": "object",
-        "title": "get_atc_signalsArguments"
+        "title": "get_atc_signalsArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "ATC Raw Signals",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "incidents:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -366,8 +621,23 @@
         "required": [
           "customer_id"
         ],
-        "type": "object",
-        "title": "get_authority_usesArguments"
+        "title": "get_authority_usesArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Authority Usage Log",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "authority:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -388,8 +658,23 @@
         "required": [
           "customer_id"
         ],
-        "type": "object",
-        "title": "get_authority_violationsArguments"
+        "title": "get_authority_violationsArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Authority Violations",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "authority:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -410,8 +695,24 @@
             "title": "Customer Id"
           }
         },
-        "type": "object",
-        "title": "get_capability_matrixArguments"
+        "title": "get_capability_matrixArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Capability-Control Matrix",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "matrix:read",
+          "cost_class": "read",
+          "default_charge_weight": 1,
+          "cacheable_ttl_s": 60
+        }
       }
     },
     {
@@ -432,8 +733,24 @@
           "kind",
           "key"
         ],
-        "type": "object",
-        "title": "get_catalog_entryArguments"
+        "title": "get_catalog_entryArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Registry Entry",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "curriculum:read",
+          "cost_class": "read",
+          "default_charge_weight": 1,
+          "cacheable_ttl_s": 300
+        }
       }
     },
     {
@@ -449,8 +766,23 @@
         "required": [
           "incident_id"
         ],
-        "type": "object",
-        "title": "get_incident_lifecycleArguments"
+        "title": "get_incident_lifecycleArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Incident Lifecycle",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "incidents:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -483,8 +815,23 @@
             "title": "Period"
           }
         },
-        "type": "object",
-        "title": "get_ledger_entriesArguments"
+        "title": "get_ledger_entriesArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Ledger Entries",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "ledger:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -505,13 +852,28 @@
             "title": "Entity"
           }
         },
-        "type": "object",
-        "title": "get_trust_scoreArguments"
+        "title": "get_trust_scoreArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Trust Score",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "ledger:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
       "name": "graduate_agent",
-      "description": "Graduate a qualified Academy recruit into the official ALEETH AI Agent Registry. Fail-closed: a recruit that has not cleared EVERY graduation requirement is REFUSED with exactly what is unmet; on success the graduation is sealed and a certificate attached to the DID. dry_run reports the verdict without minting. Operator-reserved (graduation issues a public certificate). Governed write; requires an academy-graduate scope.",
+      "description": "Graduate a qualified Academy recruit into the official ALEETH AI Agent Registry. Fail-closed: unmet graduation requirements are REFUSED naming exactly what is missing; success seals the graduation and attaches a certificate to the DID. dry_run previews the verdict. Operator-reserved. Governed write; requires an academy-graduate scope.",
       "input_schema": {
         "properties": {
           "did": {
@@ -556,13 +918,29 @@
             "type": "boolean"
           }
         },
-        "type": "object",
-        "title": "graduate_agentArguments"
+        "title": "graduate_agentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Graduate Agent",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "academy:graduate",
+          "cost_class": "write",
+          "default_charge_weight": 8
+        }
       }
     },
     {
       "name": "intake_recruit",
-      "description": "Run a recruit through the ALEETH Academy front-door intake gate: mint an immutable did:web identity, seal the dossier, and enroll — but only with the COMPLETE picture (identity + full personal info + background). An incomplete dossier is REFUSED naming every missing / invalid field. 'dossier' is the recruit record (field spec at GET /api/ica/academy/intake/spec); dry_run validates without minting. Operator-reserved (intake mints an identity). Governed write; requires an academy-intake scope.",
+      "description": "Run a recruit through the ALEETH Academy intake gate: mint an immutable did:web identity, seal the dossier, and enroll. An incomplete dossier is REFUSED naming every missing or invalid field (spec at GET /api/ica/academy/intake/spec); dry_run validates without minting. Operator-reserved. Governed write; requires an academy-intake scope.",
       "input_schema": {
         "properties": {
           "customer_id": {
@@ -584,8 +962,24 @@
           "customer_id",
           "dossier"
         ],
-        "type": "object",
-        "title": "intake_recruitArguments"
+        "title": "intake_recruitArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Intake Recruit",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "academy:intake",
+          "cost_class": "write",
+          "default_charge_weight": 8
+        }
       }
     },
     {
@@ -613,8 +1007,24 @@
         "required": [
           "statement"
         ],
-        "type": "object",
-        "title": "issue_receiptArguments"
+        "title": "issue_receiptArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Attest to Ledger",
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "ledger:write",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
@@ -622,8 +1032,23 @@
       "description": "List the agents currently halted in ICA quarantine, with reasons. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "type": "object",
-        "title": "list_active_haltsArguments"
+        "title": "list_active_haltsArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "List Quarantined Agents",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "agent:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -631,8 +1056,24 @@
       "description": "List the regulatory frameworks ICA maps to, with coverage. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "type": "object",
-        "title": "list_frameworksArguments"
+        "title": "list_frameworksArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "List Regulatory Frameworks",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "frameworks:read",
+          "cost_class": "read",
+          "default_charge_weight": 1,
+          "cacheable_ttl_s": 300
+        }
       }
     },
     {
@@ -658,13 +1099,28 @@
             "type": "integer"
           }
         },
-        "type": "object",
-        "title": "list_governed_apisArguments"
+        "title": "list_governed_apisArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "List Governed APIs",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "catalog:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
       "name": "list_skills_and_tools",
-      "description": "Read the ALEETH Academy Tools & Skills Registry (the curriculum an agent is equipped with): every skill (a capability lane) and tool (a manifest-backed instrument), each rated across six ICA control dimensions with its compliance status and signed attestation. Optional kind filter ('skill' or 'tool'). Read-only, fully governed.",
+      "description": "Read the ALEETH Academy Tools & Skills Registry: every skill and tool rated across six ICA control dimensions with compliance status and signed attestation. Optional kind filter ('skill' or 'tool'). Read-only, fully governed.",
       "input_schema": {
         "properties": {
           "kind": {
@@ -680,8 +1136,24 @@
             "title": "Kind"
           }
         },
-        "type": "object",
-        "title": "list_skills_and_toolsArguments"
+        "title": "list_skills_and_toolsArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Tools & Skills Registry",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "curriculum:read",
+          "cost_class": "read",
+          "default_charge_weight": 1,
+          "cacheable_ttl_s": 300
+        }
       }
     },
     {
@@ -702,8 +1174,24 @@
           "finding_id",
           "fix_plan"
         ],
-        "type": "object",
-        "title": "ratify_findingArguments"
+        "title": "ratify_findingArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Ratify Finding",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "disposition:manage",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
@@ -731,8 +1219,24 @@
         "required": [
           "candidate_id"
         ],
-        "type": "object",
-        "title": "reject_rule_candidateArguments"
+        "title": "reject_rule_candidateArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Reject Rule Candidate",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "rule:govern",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
@@ -765,8 +1269,24 @@
           "target_agent_id",
           "reason"
         ],
-        "type": "object",
-        "title": "release_agentArguments"
+        "title": "release_agentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "RELEASE Agent",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "agent:control",
+          "cost_class": "control",
+          "default_charge_weight": 8
+        }
       }
     },
     {
@@ -799,8 +1319,24 @@
           "target_agent_id",
           "reason"
         ],
-        "type": "object",
-        "title": "stop_agentArguments"
+        "title": "stop_agentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "STOP Agent (Halt)",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "agent:control",
+          "cost_class": "control",
+          "default_charge_weight": 8
+        }
       }
     },
     {
@@ -833,8 +1369,24 @@
           "finding_id",
           "suppress_until_iso"
         ],
-        "type": "object",
-        "title": "suppress_findingArguments"
+        "title": "suppress_findingArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Suppress Finding",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "disposition:manage",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
@@ -879,8 +1431,24 @@
           "incident_id",
           "accountable_person"
         ],
-        "type": "object",
-        "title": "triage_incidentArguments"
+        "title": "triage_incidentArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Triage Incident",
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "incident:manage",
+          "cost_class": "write",
+          "default_charge_weight": 4
+        }
       }
     },
     {
@@ -896,8 +1464,23 @@
         "required": [
           "receipt_hash"
         ],
-        "type": "object",
-        "title": "verify_receiptArguments"
+        "title": "verify_receiptArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Verify Receipt",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "ledger:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     },
     {
@@ -913,8 +1496,23 @@
         "required": [
           "receipt_hash"
         ],
-        "type": "object",
-        "title": "verify_receipt_chainArguments"
+        "title": "verify_receipt_chainArguments",
+        "type": "object"
+      },
+      "annotations": {
+        "title": "Verify Receipt Chain",
+        "readOnlyHint": true,
+        "openWorldHint": false
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "ledger:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
       }
     }
   ]

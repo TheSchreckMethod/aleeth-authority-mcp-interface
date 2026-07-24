@@ -2,6 +2,47 @@
 
 Registry entry: `com.aleeth/authority-mcp`. Dates are UTC.
 
+## 1.1.0 (2026-07-24, staged; deploy gated)
+
+- Wire identity fixed: the server now reports the product version (1.1.0) in
+  `serverInfo` and the discovery documents, closing the 1.0.0 note below about the
+  internal 2.0 beta build string leaking through. One source of truth, pinned by tests.
+- Tool 37: `get_atc_overview` reads engine health, sensor coverage, recent incidents,
+  and recent raw signals concurrently in one governed call (one Rail Guard authorize,
+  one receipt). A failed section is named in the response and in the sealed receipt
+  summary, never silently dropped.
+- Every tool registration now carries protocol `annotations` (read-only, destructive,
+  open-world hints; idempotency is never claimed because it is not verified) and an
+  `aleeth/governance` metadata block (rail-guarded, receipted, reversibility, scope,
+  cost class, default charge weight). `tools/list` carries a public five-minute
+  freshness hint so clients can skip re-introspection.
+- New governed resource `ica://ops/tool-stats`: live per-tool latency quantiles
+  (bucket-derived; null over fabricated), outcome counts, dependency health, and the
+  cost catalog. The read is charged, authorized, and receipted like every other, and
+  aggregates per tool only, never per caller.
+- Per-tool latency histograms and outcome counters on the metrics endpoint. Rail Guard
+  decision timing is exported post-floor only, so the metrics surface carries no raw
+  verdict timing.
+- Bounded retries with full jitter and a retry budget, scoped by each upstream's
+  side-effect contract: the Rail Guard authorize retries only requests that provably
+  never reached the server; receipt issuance retries under its idempotency key; a
+  denial is never retried. Retries can only turn an outage into a success, never a
+  deny into an allow.
+- Optional governed read cache (off by default): on a hit only the upstream fetch is
+  elided; the call is still budget-charged, authorized, and receipted, and the receipt
+  states `data_source: cache`. Only slow-moving catalog reads are cacheable; halt
+  state, receipt verification, health, and every write are always computed live.
+  Values are sealed at rest; tenant is a key dimension.
+- Container build metadata corrected: an interim commit labeled an echoed JSON file
+  "SLSA Level 3" attestation and also broke the image build; both are reverted. The
+  image now records honest build traceability (git sha), and real SLSA provenance is
+  named as future work rather than claimed.
+- Configuration matrix expanded (timeouts, token cache, spool, JWKS/leeway with a
+  clamp, retry and cache knobs), each failing toward its default on a bad value.
+- The committed `tools/manifest.json` for this version is exported from a local
+  pre-release build and marked `"source": "local-prerelease"`; the production
+  re-export replaces it after the gated deploy.
+
 ## 1.0.0 (2026-07-24)
 
 - Registry entry republished with `websiteUrl` and `repository` provenance; this public
