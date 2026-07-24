@@ -1,13 +1,13 @@
 {
-  "protocol": "aleeth-mcp-tool-manifest-v1",
+  "protocol": "aleeth-mcp-tool-manifest-v2",
   "server": {
     "registry_name": "com.aleeth/authority-mcp",
     "title": "ALEETH Authority MCP",
     "endpoint": "https://mcp.aleeth.com/mcp",
     "reported_name": "ALEETH Authority MCP",
     "reported_version": "1.1.0",
-    "mcp_protocol_version": null,
-    "source": "local-prerelease"
+    "mcp_protocol_version": "2025-06-18",
+    "source": "production"
   },
   "tool_count": 37,
   "tools": [
@@ -24,14 +24,14 @@
         "required": [
           "candidate_id"
         ],
-        "title": "approve_rule_candidateArguments",
-        "type": "object"
+        "type": "object",
+        "title": "approve_rule_candidateArguments"
       },
       "annotations": {
-        "title": "Approve Rule Candidate",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Approve Rule Candidate"
       },
       "_meta": {
         "aleeth/governance": {
@@ -69,14 +69,14 @@
         "required": [
           "incident_id"
         ],
-        "title": "close_incidentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "close_incidentArguments"
       },
       "annotations": {
-        "title": "Close Incident",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Close Incident"
       },
       "_meta": {
         "aleeth/governance": {
@@ -107,14 +107,14 @@
           "incident_id",
           "containment_action"
         ],
-        "title": "contain_incidentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "contain_incidentArguments"
       },
       "annotations": {
-        "title": "Contain Incident",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Contain Incident"
       },
       "_meta": {
         "aleeth/governance": {
@@ -169,14 +169,14 @@
           "incident_id",
           "disclosed"
         ],
-        "title": "disclose_incidentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "disclose_incidentArguments"
       },
       "annotations": {
-        "title": "Record Incident Disclosure",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Record Incident Disclosure"
       },
       "_meta": {
         "aleeth/governance": {
@@ -214,14 +214,14 @@
         "required": [
           "finding_id"
         ],
-        "title": "dismiss_findingArguments",
-        "type": "object"
+        "type": "object",
+        "title": "dismiss_findingArguments"
       },
       "annotations": {
-        "title": "Dismiss Finding",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Dismiss Finding"
       },
       "_meta": {
         "aleeth/governance": {
@@ -293,14 +293,14 @@
           "entry_kind",
           "entry_key"
         ],
-        "title": "equip_agentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "equip_agentArguments"
       },
       "annotations": {
-        "title": "Equip Agent",
-        "readOnlyHint": false,
         "destructiveHint": false,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Equip Agent"
       },
       "_meta": {
         "aleeth/governance": {
@@ -338,14 +338,14 @@
         "required": [
           "finding_id"
         ],
-        "title": "escalate_findingArguments",
-        "type": "object"
+        "type": "object",
+        "title": "escalate_findingArguments"
       },
       "annotations": {
-        "title": "Escalate Finding",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Escalate Finding"
       },
       "_meta": {
         "aleeth/governance": {
@@ -371,13 +371,13 @@
         "required": [
           "did"
         ],
-        "title": "get_academy_fileArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_academy_fileArguments"
       },
       "annotations": {
-        "title": "Academy File by DID",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Academy File by DID"
       },
       "_meta": {
         "aleeth/governance": {
@@ -395,13 +395,13 @@
       "description": "Read the ALEETH AI Agent Registry: certified Academy graduates keyed by immutable did:web identities, with the public descriptor and graduate count. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "title": "get_agent_registryArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_agent_registryArguments"
       },
       "annotations": {
-        "title": "Agent Registry",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Agent Registry"
       },
       "_meta": {
         "aleeth/governance": {
@@ -428,13 +428,13 @@
         "required": [
           "identity_id"
         ],
-        "title": "get_agent_scopeArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_agent_scopeArguments"
       },
       "annotations": {
-        "title": "Agent Authority Scope",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Agent Authority Scope"
       },
       "_meta": {
         "aleeth/governance": {
@@ -452,13 +452,13 @@
       "description": "Read ATC sensor coverage status: which sensors are reporting and healthy. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "title": "get_atc_coverageArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_atc_coverageArguments"
       },
       "annotations": {
-        "title": "ATC Sensor Coverage",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "ATC Sensor Coverage"
       },
       "_meta": {
         "aleeth/governance": {
@@ -477,13 +477,13 @@
       "description": "Read the ATC engine self-state: is the sensor polling loop alive and ticking. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "title": "get_atc_healthArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_atc_healthArguments"
       },
       "annotations": {
-        "title": "ATC Engine Health",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "ATC Engine Health"
       },
       "_meta": {
         "aleeth/governance": {
@@ -507,13 +507,13 @@
             "type": "integer"
           }
         },
-        "title": "get_atc_incidentsArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_atc_incidentsArguments"
       },
       "annotations": {
-        "title": "ATC Incidents",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "ATC Incidents"
       },
       "_meta": {
         "aleeth/governance": {
@@ -542,13 +542,13 @@
             "type": "integer"
           }
         },
-        "title": "get_atc_overviewArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_atc_overviewArguments"
       },
       "annotations": {
-        "title": "ATC Overview (fan-out)",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "ATC Overview (fan-out)"
       },
       "_meta": {
         "aleeth/governance": {
@@ -572,13 +572,13 @@
             "type": "integer"
           }
         },
-        "title": "get_atc_signalsArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_atc_signalsArguments"
       },
       "annotations": {
-        "title": "ATC Raw Signals",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "ATC Raw Signals"
       },
       "_meta": {
         "aleeth/governance": {
@@ -621,13 +621,13 @@
         "required": [
           "customer_id"
         ],
-        "title": "get_authority_usesArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_authority_usesArguments"
       },
       "annotations": {
-        "title": "Authority Usage Log",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Authority Usage Log"
       },
       "_meta": {
         "aleeth/governance": {
@@ -658,13 +658,13 @@
         "required": [
           "customer_id"
         ],
-        "title": "get_authority_violationsArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_authority_violationsArguments"
       },
       "annotations": {
-        "title": "Authority Violations",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Authority Violations"
       },
       "_meta": {
         "aleeth/governance": {
@@ -695,13 +695,13 @@
             "title": "Customer Id"
           }
         },
-        "title": "get_capability_matrixArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_capability_matrixArguments"
       },
       "annotations": {
-        "title": "Capability-Control Matrix",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Capability-Control Matrix"
       },
       "_meta": {
         "aleeth/governance": {
@@ -733,13 +733,13 @@
           "kind",
           "key"
         ],
-        "title": "get_catalog_entryArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_catalog_entryArguments"
       },
       "annotations": {
-        "title": "Registry Entry",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Registry Entry"
       },
       "_meta": {
         "aleeth/governance": {
@@ -766,13 +766,13 @@
         "required": [
           "incident_id"
         ],
-        "title": "get_incident_lifecycleArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_incident_lifecycleArguments"
       },
       "annotations": {
-        "title": "Incident Lifecycle",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Incident Lifecycle"
       },
       "_meta": {
         "aleeth/governance": {
@@ -815,13 +815,13 @@
             "title": "Period"
           }
         },
-        "title": "get_ledger_entriesArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_ledger_entriesArguments"
       },
       "annotations": {
-        "title": "Ledger Entries",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Ledger Entries"
       },
       "_meta": {
         "aleeth/governance": {
@@ -852,13 +852,13 @@
             "title": "Entity"
           }
         },
-        "title": "get_trust_scoreArguments",
-        "type": "object"
+        "type": "object",
+        "title": "get_trust_scoreArguments"
       },
       "annotations": {
-        "title": "Trust Score",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Trust Score"
       },
       "_meta": {
         "aleeth/governance": {
@@ -918,14 +918,14 @@
             "type": "boolean"
           }
         },
-        "title": "graduate_agentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "graduate_agentArguments"
       },
       "annotations": {
-        "title": "Graduate Agent",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Graduate Agent"
       },
       "_meta": {
         "aleeth/governance": {
@@ -962,14 +962,14 @@
           "customer_id",
           "dossier"
         ],
-        "title": "intake_recruitArguments",
-        "type": "object"
+        "type": "object",
+        "title": "intake_recruitArguments"
       },
       "annotations": {
-        "title": "Intake Recruit",
-        "readOnlyHint": false,
         "destructiveHint": false,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Intake Recruit"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1007,14 +1007,14 @@
         "required": [
           "statement"
         ],
-        "title": "issue_receiptArguments",
-        "type": "object"
+        "type": "object",
+        "title": "issue_receiptArguments"
       },
       "annotations": {
-        "title": "Attest to Ledger",
-        "readOnlyHint": false,
         "destructiveHint": false,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Attest to Ledger"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1032,13 +1032,13 @@
       "description": "List the agents currently halted in ICA quarantine, with reasons. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "title": "list_active_haltsArguments",
-        "type": "object"
+        "type": "object",
+        "title": "list_active_haltsArguments"
       },
       "annotations": {
-        "title": "List Quarantined Agents",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "List Quarantined Agents"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1056,13 +1056,13 @@
       "description": "List the regulatory frameworks ICA maps to, with coverage. Read-only, fully governed.",
       "input_schema": {
         "properties": {},
-        "title": "list_frameworksArguments",
-        "type": "object"
+        "type": "object",
+        "title": "list_frameworksArguments"
       },
       "annotations": {
-        "title": "List Regulatory Frameworks",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "List Regulatory Frameworks"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1099,13 +1099,13 @@
             "type": "integer"
           }
         },
-        "title": "list_governed_apisArguments",
-        "type": "object"
+        "type": "object",
+        "title": "list_governed_apisArguments"
       },
       "annotations": {
-        "title": "List Governed APIs",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "List Governed APIs"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1136,13 +1136,13 @@
             "title": "Kind"
           }
         },
-        "title": "list_skills_and_toolsArguments",
-        "type": "object"
+        "type": "object",
+        "title": "list_skills_and_toolsArguments"
       },
       "annotations": {
-        "title": "Tools & Skills Registry",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Tools & Skills Registry"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1174,14 +1174,14 @@
           "finding_id",
           "fix_plan"
         ],
-        "title": "ratify_findingArguments",
-        "type": "object"
+        "type": "object",
+        "title": "ratify_findingArguments"
       },
       "annotations": {
-        "title": "Ratify Finding",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Ratify Finding"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1219,14 +1219,14 @@
         "required": [
           "candidate_id"
         ],
-        "title": "reject_rule_candidateArguments",
-        "type": "object"
+        "type": "object",
+        "title": "reject_rule_candidateArguments"
       },
       "annotations": {
-        "title": "Reject Rule Candidate",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Reject Rule Candidate"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1269,14 +1269,14 @@
           "target_agent_id",
           "reason"
         ],
-        "title": "release_agentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "release_agentArguments"
       },
       "annotations": {
-        "title": "RELEASE Agent",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "RELEASE Agent"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1319,14 +1319,14 @@
           "target_agent_id",
           "reason"
         ],
-        "title": "stop_agentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "stop_agentArguments"
       },
       "annotations": {
-        "title": "STOP Agent (Halt)",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "STOP Agent (Halt)"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1369,14 +1369,14 @@
           "finding_id",
           "suppress_until_iso"
         ],
-        "title": "suppress_findingArguments",
-        "type": "object"
+        "type": "object",
+        "title": "suppress_findingArguments"
       },
       "annotations": {
-        "title": "Suppress Finding",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Suppress Finding"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1431,14 +1431,14 @@
           "incident_id",
           "accountable_person"
         ],
-        "title": "triage_incidentArguments",
-        "type": "object"
+        "type": "object",
+        "title": "triage_incidentArguments"
       },
       "annotations": {
-        "title": "Triage Incident",
-        "readOnlyHint": false,
         "destructiveHint": true,
-        "openWorldHint": false
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Triage Incident"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1464,13 +1464,13 @@
         "required": [
           "receipt_hash"
         ],
-        "title": "verify_receiptArguments",
-        "type": "object"
+        "type": "object",
+        "title": "verify_receiptArguments"
       },
       "annotations": {
-        "title": "Verify Receipt",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Verify Receipt"
       },
       "_meta": {
         "aleeth/governance": {
@@ -1496,13 +1496,13 @@
         "required": [
           "receipt_hash"
         ],
-        "title": "verify_receipt_chainArguments",
-        "type": "object"
+        "type": "object",
+        "title": "verify_receipt_chainArguments"
       },
       "annotations": {
-        "title": "Verify Receipt Chain",
+        "openWorldHint": false,
         "readOnlyHint": true,
-        "openWorldHint": false
+        "title": "Verify Receipt Chain"
       },
       "_meta": {
         "aleeth/governance": {
