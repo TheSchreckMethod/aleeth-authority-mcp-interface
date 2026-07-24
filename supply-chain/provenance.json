@@ -1,0 +1,25 @@
+{
+  "artifact": "aleeth-authority-mcp supply-chain evidence",
+  "artifacts": {
+    "osv-scan.json": "54345d5194d238b6017d0f3181f392109ce35023cc6b4bdfa8c134943dcb578e",
+    "sbom.cdx.json": "22631714b6c87458289739e30dd2edd03b34fae5ad38358ef58c201678211950"
+  },
+  "generated_utc": "2026-07-24T10:30:24+00:00",
+  "lockfile": {
+    "implementation_repo_commit": "8cc8d2d7765e84eecb5e827edb76e609395dda81",
+    "path": "uv.lock",
+    "sha256": "286844fa316ee3a1fc2fab51db3099211fe227ce8d2bebe3d4b409b37fb8d25e"
+  },
+  "results": {
+    "known_vulnerabilities": 0,
+    "sbom_components": 45
+  },
+  "scopes": {
+    "sbom": "runtime dependencies only (uv export --no-dev)",
+    "scan": "full lockfile including dev dependencies"
+  },
+  "tools": {
+    "osv_scanner": "osv-scanner version: 2.4.0",
+    "uv": "uv 0.11.30 (4cb3d0366 2026-07-20 aarch64-apple-darwin)"
+  }
+}

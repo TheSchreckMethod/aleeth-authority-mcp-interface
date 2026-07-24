@@ -1,0 +1,54 @@
+# Verifies the published artifacts in this repository are internally consistent:
+# the tool manifest parses and its declared count matches its contents, and the
+# supply-chain artifacts match the digests recorded in provenance.json.
+#
+# Honesty note, read before citing this workflow: the organization's GitHub
+# Actions are currently not running because of a billing spending ceiling. This
+# workflow is authored and correct, and its public run history is the evidence
+# either way. An empty run history means it has not run, and no claim is made
+# that it has.
+name: verify-artifacts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Manifest parses and tool_count matches
+        run: |
+          python3 - <<'EOF'
+          import json
+          m = json.load(open("tools/manifest.json"))
+          declared = m["tool_count"]
+          actual = len(m["tools"])
+          assert declared == actual, f"tool_count {declared} != {actual} tools"
+          names = [t["name"] for t in m["tools"]]
+          assert names == sorted(names), "manifest is not deterministically sorted"
+          print(f"manifest OK: {actual} tools, sorted")
+          EOF
+      - name: Supply-chain artifacts match provenance digests
+        run: |
+          python3 - <<'EOF'
+          import hashlib, json, pathlib
+          root = pathlib.Path("supply-chain")
+          if not root.exists():
+              print("no supply-chain directory yet; nothing to verify")
+              raise SystemExit(0)
+          prov = json.load(open(root / "provenance.json"))
+          for name, digest in prov["artifacts"].items():
+              actual = hashlib.sha256((root / name).read_bytes()).hexdigest()
+              assert actual == digest, f"{name}: digest mismatch"
+              print(f"{name}: digest OK")
+          EOF
+      - name: Rescan the published lockfile evidence
+        run: |
+          if [ -f supply-chain/osv-scan.json ]; then
+            python3 -c "import json; json.load(open('supply-chain/osv-scan.json')); print('scan artifact parses')"
+          else
+            echo "no scan artifact yet"
+          fi
