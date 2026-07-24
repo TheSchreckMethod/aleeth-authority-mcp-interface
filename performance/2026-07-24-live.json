@@ -1,0 +1,27 @@
+{
+  "client": {
+    "errors": {},
+    "ok": 100,
+    "percentiles": {
+      "max_ms": 1391.61,
+      "mean_ms": 1102.27,
+      "min_ms": 933.33,
+      "p50_ms": 1075.96,
+      "p95_ms": 1310.09,
+      "p99_ms": 1365.24
+    }
+  },
+  "mode": "LIVE: real deployment end to end, public network and control plane included.",
+  "run": {
+    "commit": "b01f49437434f50bdfbb779a4fd07f141b6e64f7",
+    "concurrency": 4,
+    "decision_floor_ms": "120 (default)",
+    "generated_utc": "2026-07-24T17:27:30Z",
+    "python": "3.14.6",
+    "query_budget": "240 (default)",
+    "requests": 100,
+    "tool": "list_frameworks",
+    "warmup": 10
+  },
+  "target": "https://mcp.aleeth.com/mcp"
+}

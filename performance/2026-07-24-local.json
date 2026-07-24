@@ -1,0 +1,55 @@
+{
+  "client": {
+    "errors": {},
+    "ok": 200,
+    "percentiles": {
+      "max_ms": 215.16,
+      "mean_ms": 201.95,
+      "min_ms": 196.89,
+      "p50_ms": 201.44,
+      "p95_ms": 205.13,
+      "p99_ms": 214.16
+    }
+  },
+  "mode": "LOCAL: real server, STUB control plane, loopback, NO AUTH. Not production numbers.",
+  "run": {
+    "commit": "b01f49437434f50bdfbb779a4fd07f141b6e64f7",
+    "concurrency": 8,
+    "decision_floor_ms": "120 (default)",
+    "generated_utc": "2026-07-24T17:26:44Z",
+    "python": "3.14.6",
+    "query_budget": "1000",
+    "requests": 200,
+    "tool": "list_frameworks",
+    "warmup": 20
+  },
+  "server_phase_split": {
+    "rail_guard_s": {
+      "count": 220.0,
+      "mean_ms": 120.4,
+      "p50_ms": 175.0,
+      "p95_ms": 242.5,
+      "p99_ms": 248.5
+    },
+    "receipt_s": {
+      "count": 220.0,
+      "mean_ms": 41.49,
+      "p50_ms": 30.0,
+      "p95_ms": 48.0,
+      "p99_ms": 49.6
+    },
+    "tool_s": {
+      "count": 220.0,
+      "mean_ms": 192.89,
+      "p50_ms": 175.0,
+      "p95_ms": 242.5,
+      "p99_ms": 248.5
+    }
+  },
+  "server_phase_split_note": "covers warmup plus measured calls; client percentiles cover measured only",
+  "stub_latencies_ms": {
+    "data_fetch": 30.0,
+    "rail_guard_evaluate": 25.0,
+    "receipt_issue": 40.0
+  }
+}

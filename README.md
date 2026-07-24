@@ -15,7 +15,7 @@ Ed25519 receipt on a hash-chained ledger anchored to Bitcoin via OpenTimestamps.
 fails closed: if governance cannot run or the receipt cannot be written, the call does not
 return a result.
 
-- 36 governed tools (see [`tools/manifest.json`](tools/manifest.json))
+- 37 governed tools (see [`tools/manifest.json`](tools/manifest.json))
 - Transport: MCP streamable HTTP, TLS only
 - Authentication: OAuth 2.0 bearer tokens; discovery per RFC 9728 at
   `https://mcp.aleeth.com/.well-known/oauth-protected-resource`
@@ -26,7 +26,7 @@ return a result.
 | File | What it is | How it is produced |
 |---|---|---|
 | [`server.json`](server.json) | The manifest published to the official MCP registry | Maintained by ALEETH, versioned here |
-| [`tools/manifest.json`](tools/manifest.json) | All 36 tools: names, descriptions, input schemas | GENERATED from the live server by an export script; never hand-edited, so it cannot drift from what the server actually serves |
+| [`tools/manifest.json`](tools/manifest.json) | All 37 tools: names, descriptions, input schemas | GENERATED from the live server by an export script; never hand-edited, so it cannot drift from what the server actually serves |
 | [`CHANGELOG.md`](CHANGELOG.md) | Version history | Curated from the implementation repository's history |
 | [`SECURITY.md`](SECURITY.md) | Disclosure contact and security posture | Maintained by ALEETH |
 
@@ -45,7 +45,10 @@ None of the following requires permission from ALEETH or access to the source.
    trust anchor at `https://imperium.aleeth.com/.well-known/ica-trust-anchor.json` (public keys,
    SHA-256 DER fingerprints, and an offline verification recipe: you verify with a key you hold,
    with zero calls to ALEETH).
-4. **The full proof surface:** https://aleeth.com/proof
+4. **Measured latency, floor included:** see [`performance/`](performance/) for a live
+   end-to-end run against production and a local server-overhead run, each published with its
+   full run conditions and the enforced decision-timing floor disclosed.
+5. **The full proof surface:** https://aleeth.com/proof
 
 ## Why the source is private
 

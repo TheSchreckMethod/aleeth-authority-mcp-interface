@@ -2,7 +2,7 @@
 
 Registry entry: `com.aleeth/authority-mcp`. Dates are UTC.
 
-## 1.1.0 (2026-07-24, staged; deploy gated)
+## 1.1.0 (2026-07-24, deployed and live)
 
 - Wire identity fixed: the server now reports the product version (1.1.0) in
   `serverInfo` and the discovery documents, closing the 1.0.0 note below about the
@@ -39,9 +39,12 @@ Registry entry: `com.aleeth/authority-mcp`. Dates are UTC.
   named as future work rather than claimed.
 - Configuration matrix expanded (timeouts, token cache, spool, JWKS/leeway with a
   clamp, retry and cache knobs), each failing toward its default on a bad value.
-- The committed `tools/manifest.json` for this version is exported from a local
-  pre-release build and marked `"source": "local-prerelease"`; the production
-  re-export replaces it after the gated deploy.
+- The committed `tools/manifest.json` for this version is exported from the live
+  production server after the gated deploy and marked `"source": "production"`,
+  reporting version 1.1.0.
+- Measured latency published under `performance/`: a live end-to-end run against
+  production and a local server-overhead run, each with its full run conditions
+  and the enforced decision-timing floor disclosed.
 
 ## 1.0.0 (2026-07-24)
 
