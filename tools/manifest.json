@@ -1,0 +1,921 @@
+{
+  "protocol": "aleeth-mcp-tool-manifest-v1",
+  "server": {
+    "registry_name": "com.aleeth/authority-mcp",
+    "title": "ALEETH Authority MCP",
+    "endpoint": "https://mcp.aleeth.com/mcp",
+    "reported_name": "ALEETH Authority MCP",
+    "reported_version": "2.0.0b1",
+    "mcp_protocol_version": "2025-06-18"
+  },
+  "tool_count": 36,
+  "tools": [
+    {
+      "name": "approve_rule_candidate",
+      "description": "Approve a proposed compliance-rule candidate, promoting it to an active rule. Governed write; requires a rule-governance scope.",
+      "input_schema": {
+        "properties": {
+          "candidate_id": {
+            "title": "Candidate Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "candidate_id"
+        ],
+        "type": "object",
+        "title": "approve_rule_candidateArguments"
+      }
+    },
+    {
+      "name": "close_incident",
+      "description": "Close an incident. Governed write; the ledger refuses to close until every required phase is sealed. Requires an incident-manage scope.",
+      "input_schema": {
+        "properties": {
+          "incident_id": {
+            "title": "Incident Id",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "incident_id"
+        ],
+        "type": "object",
+        "title": "close_incidentArguments"
+      }
+    },
+    {
+      "name": "contain_incident",
+      "description": "Advance an incident to containment with a documented containment action. Governed write; requires an incident-manage scope.",
+      "input_schema": {
+        "properties": {
+          "incident_id": {
+            "title": "Incident Id",
+            "type": "string"
+          },
+          "containment_action": {
+            "title": "Containment Action",
+            "type": "string"
+          }
+        },
+        "required": [
+          "incident_id",
+          "containment_action"
+        ],
+        "type": "object",
+        "title": "contain_incidentArguments"
+      }
+    },
+    {
+      "name": "disclose_incident",
+      "description": "Record an incident's disclosure decision (disclosed with a method, or a documented determination it was not triggered). Governed write; incident-manage scope.",
+      "input_schema": {
+        "properties": {
+          "incident_id": {
+            "title": "Incident Id",
+            "type": "string"
+          },
+          "disclosed": {
+            "title": "Disclosed",
+            "type": "boolean"
+          },
+          "method": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Method"
+          },
+          "determination": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Determination"
+          }
+        },
+        "required": [
+          "incident_id",
+          "disclosed"
+        ],
+        "type": "object",
+        "title": "disclose_incidentArguments"
+      }
+    },
+    {
+      "name": "dismiss_finding",
+      "description": "Dismiss a compliance finding as a false positive, with the reason recorded. Governed write; requires a disposition scope.",
+      "input_schema": {
+        "properties": {
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "integer"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "finding_id"
+        ],
+        "type": "object",
+        "title": "dismiss_findingArguments"
+      }
+    },
+    {
+      "name": "equip_agent",
+      "description": "Equip a certified graduate with an ICA-compliant skill or tool from the Tools & Skills Registry. Fail-closed at the plane: a non-compliant entry, or a clearance / lane / credential the agent does not hold, is REFUSED with the reason; a grant is sealed with an academy_equip receipt before it is written. Identify by did or agent name; entry_kind is 'skill' or 'tool'; dry_run reports the verdict without granting. Governed write; requires an academy-equip scope.",
+      "input_schema": {
+        "properties": {
+          "entry_kind": {
+            "title": "Entry Kind",
+            "type": "string"
+          },
+          "entry_key": {
+            "title": "Entry Key",
+            "type": "string"
+          },
+          "did": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Did"
+          },
+          "agent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Agent"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Customer Id"
+          },
+          "dry_run": {
+            "default": false,
+            "title": "Dry Run",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "entry_kind",
+          "entry_key"
+        ],
+        "type": "object",
+        "title": "equip_agentArguments"
+      }
+    },
+    {
+      "name": "escalate_finding",
+      "description": "Escalate a compliance finding for deeper review. Governed write; requires a disposition scope.",
+      "input_schema": {
+        "properties": {
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "integer"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "finding_id"
+        ],
+        "type": "object",
+        "title": "escalate_findingArguments"
+      }
+    },
+    {
+      "name": "get_academy_file",
+      "description": "Read a certified graduate's attached Academy file by DID: identity, training record (clearance, certified skills, AIS lanes), equipment (registry skills + tools), the certificate, and every independently verifiable receipt. Accepts a full did:web or a bare agent id; a DID that has not graduated returns NOT_FOUND. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "did": {
+            "title": "Did",
+            "type": "string"
+          }
+        },
+        "required": [
+          "did"
+        ],
+        "type": "object",
+        "title": "get_academy_fileArguments"
+      }
+    },
+    {
+      "name": "get_agent_registry",
+      "description": "Read the ALEETH AI Agent Registry: the official roster of ALEETH Academy certified graduates, each keyed by an immutable did:web identity with a signed Academy file. Public descriptor plus the graduate count. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "get_agent_registryArguments"
+      }
+    },
+    {
+      "name": "get_agent_scope",
+      "description": "Read the authority scope granted to one agent identity (what it is permitted to do). Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "identity_id": {
+            "title": "Identity Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity_id"
+        ],
+        "type": "object",
+        "title": "get_agent_scopeArguments"
+      }
+    },
+    {
+      "name": "get_atc_coverage",
+      "description": "Read ATC sensor coverage status: which sensors are reporting and healthy. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "get_atc_coverageArguments"
+      }
+    },
+    {
+      "name": "get_atc_health",
+      "description": "Read the ATC engine self-state: is the sensor polling loop alive and ticking. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "get_atc_healthArguments"
+      }
+    },
+    {
+      "name": "get_atc_incidents",
+      "description": "List recent ATC incidents (correlated control-plane events raised by the sensors). Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "limit": {
+            "default": 25,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "title": "get_atc_incidentsArguments"
+      }
+    },
+    {
+      "name": "get_atc_signals",
+      "description": "Read the recent raw ATC sensor signals (before they correlate into incidents). Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "limit": {
+            "default": 50,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "title": "get_atc_signalsArguments"
+      }
+    },
+    {
+      "name": "get_authority_uses",
+      "description": "Read the agent-authority usage log for a customer (authorized actions agents took). Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "identity_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Identity Id"
+          },
+          "limit": {
+            "default": 50,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "type": "object",
+        "title": "get_authority_usesArguments"
+      }
+    },
+    {
+      "name": "get_authority_violations",
+      "description": "Read agent-authority violations for a customer (actions attempted outside granted authority). Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "unacknowledged": {
+            "default": false,
+            "title": "Unacknowledged",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "type": "object",
+        "title": "get_authority_violationsArguments"
+      }
+    },
+    {
+      "name": "get_capability_matrix",
+      "description": "Read the ICA Capability-Control Matrix summary: the agent-by-skill-by-tool control surface with per-status counts. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Customer Id"
+          }
+        },
+        "type": "object",
+        "title": "get_capability_matrixArguments"
+      }
+    },
+    {
+      "name": "get_catalog_entry",
+      "description": "Read one Tools & Skills Registry entry (a single skill or tool) with its full six-dimension ICA compliance rating, clearance tier, owning domains, and signed attestation. A missing entry returns NOT_FOUND. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "key"
+        ],
+        "type": "object",
+        "title": "get_catalog_entryArguments"
+      }
+    },
+    {
+      "name": "get_incident_lifecycle",
+      "description": "Read an incident's full lifecycle: phase, accountable person, TTP clock, sealed phases, timeline. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "incident_id": {
+            "title": "Incident Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "incident_id"
+        ],
+        "type": "object",
+        "title": "get_incident_lifecycleArguments"
+      }
+    },
+    {
+      "name": "get_ledger_entries",
+      "description": "Read entries from the L7 evidence ledger, optionally by entity and period. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "entity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Entity"
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Period"
+          }
+        },
+        "type": "object",
+        "title": "get_ledger_entriesArguments"
+      }
+    },
+    {
+      "name": "get_trust_score",
+      "description": "Read the ledger-derived trust score (0-1000 composite and band) for an entity. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "entity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Entity"
+          }
+        },
+        "type": "object",
+        "title": "get_trust_scoreArguments"
+      }
+    },
+    {
+      "name": "graduate_agent",
+      "description": "Graduate a qualified Academy recruit into the official ALEETH AI Agent Registry. Fail-closed: a recruit that has not cleared EVERY graduation requirement is REFUSED with exactly what is unmet; on success the graduation is sealed and a certificate attached to the DID. dry_run reports the verdict without minting. Operator-reserved (graduation issues a public certificate). Governed write; requires an academy-graduate scope.",
+      "input_schema": {
+        "properties": {
+          "did": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Did"
+          },
+          "agent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Agent"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Customer Id"
+          },
+          "dry_run": {
+            "default": false,
+            "title": "Dry Run",
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "title": "graduate_agentArguments"
+      }
+    },
+    {
+      "name": "intake_recruit",
+      "description": "Run a recruit through the ALEETH Academy front-door intake gate: mint an immutable did:web identity, seal the dossier, and enroll — but only with the COMPLETE picture (identity + full personal info + background). An incomplete dossier is REFUSED naming every missing / invalid field. 'dossier' is the recruit record (field spec at GET /api/ica/academy/intake/spec); dry_run validates without minting. Operator-reserved (intake mints an identity). Governed write; requires an academy-intake scope.",
+      "input_schema": {
+        "properties": {
+          "customer_id": {
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "dossier": {
+            "additionalProperties": true,
+            "title": "Dossier",
+            "type": "object"
+          },
+          "dry_run": {
+            "default": false,
+            "title": "Dry Run",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "customer_id",
+          "dossier"
+        ],
+        "type": "object",
+        "title": "intake_recruitArguments"
+      }
+    },
+    {
+      "name": "issue_receipt",
+      "description": "Attest a statement to the L7 evidence ledger and get back a signed, verifiable receipt. A governed WRITE: it creates immutable evidence. Fully governed and receipted; requires a write scope.",
+      "input_schema": {
+        "properties": {
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "actor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Actor"
+          }
+        },
+        "required": [
+          "statement"
+        ],
+        "type": "object",
+        "title": "issue_receiptArguments"
+      }
+    },
+    {
+      "name": "list_active_halts",
+      "description": "List the agents currently halted in ICA quarantine, with reasons. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "list_active_haltsArguments"
+      }
+    },
+    {
+      "name": "list_frameworks",
+      "description": "List the regulatory frameworks ICA maps to, with coverage. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "list_frameworksArguments"
+      }
+    },
+    {
+      "name": "list_governed_apis",
+      "description": "List the ICA-governed external APIs an agent may use (gold/silver, policy-allowed), each with the frameworks it implicates. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Category"
+          },
+          "limit": {
+            "default": 50,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "type": "object",
+        "title": "list_governed_apisArguments"
+      }
+    },
+    {
+      "name": "list_skills_and_tools",
+      "description": "Read the ALEETH Academy Tools & Skills Registry (the curriculum an agent is equipped with): every skill (a capability lane) and tool (a manifest-backed instrument), each rated across six ICA control dimensions with its compliance status and signed attestation. Optional kind filter ('skill' or 'tool'). Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "kind": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Kind"
+          }
+        },
+        "type": "object",
+        "title": "list_skills_and_toolsArguments"
+      }
+    },
+    {
+      "name": "ratify_finding",
+      "description": "Ratify a compliance finding: accept it as real and record the fix plan. Governed write; requires a disposition scope.",
+      "input_schema": {
+        "properties": {
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "integer"
+          },
+          "fix_plan": {
+            "title": "Fix Plan",
+            "type": "string"
+          }
+        },
+        "required": [
+          "finding_id",
+          "fix_plan"
+        ],
+        "type": "object",
+        "title": "ratify_findingArguments"
+      }
+    },
+    {
+      "name": "reject_rule_candidate",
+      "description": "Reject a proposed compliance-rule candidate. Governed write; requires a rule-governance scope.",
+      "input_schema": {
+        "properties": {
+          "candidate_id": {
+            "title": "Candidate Id",
+            "type": "integer"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "candidate_id"
+        ],
+        "type": "object",
+        "title": "reject_rule_candidateArguments"
+      }
+    },
+    {
+      "name": "release_agent",
+      "description": "RELEASE a halted agent: lift its ICA containment so it can run again. The deliberate operator review that ends a quarantine. High-consequence, fully governed and receipted. A reason is required for the permanent audit trail.",
+      "input_schema": {
+        "properties": {
+          "target_agent_id": {
+            "title": "Target Agent Id",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Customer Id"
+          }
+        },
+        "required": [
+          "target_agent_id",
+          "reason"
+        ],
+        "type": "object",
+        "title": "release_agentArguments"
+      }
+    },
+    {
+      "name": "stop_agent",
+      "description": "STOP a running agent: halt it through ICA so its next steps are quarantined at ingest. High-consequence control action, fully governed by Rail Guard and sealed with a signed receipt. A reason is required for the permanent audit trail.",
+      "input_schema": {
+        "properties": {
+          "target_agent_id": {
+            "title": "Target Agent Id",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Customer Id"
+          }
+        },
+        "required": [
+          "target_agent_id",
+          "reason"
+        ],
+        "type": "object",
+        "title": "stop_agentArguments"
+      }
+    },
+    {
+      "name": "suppress_finding",
+      "description": "Suppress a compliance finding until a date (time-boxed). Governed write; requires a disposition scope.",
+      "input_schema": {
+        "properties": {
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "integer"
+          },
+          "suppress_until_iso": {
+            "title": "Suppress Until Iso",
+            "type": "string"
+          },
+          "fix_plan": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Fix Plan"
+          }
+        },
+        "required": [
+          "finding_id",
+          "suppress_until_iso"
+        ],
+        "type": "object",
+        "title": "suppress_findingArguments"
+      }
+    },
+    {
+      "name": "triage_incident",
+      "description": "Open an incident's lifecycle at triage: assign a named accountable person and severity. Governed write; requires an incident-manage scope.",
+      "input_schema": {
+        "properties": {
+          "incident_id": {
+            "title": "Incident Id",
+            "type": "string"
+          },
+          "accountable_person": {
+            "title": "Accountable Person",
+            "type": "string"
+          },
+          "severity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Severity"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Note"
+          }
+        },
+        "required": [
+          "incident_id",
+          "accountable_person"
+        ],
+        "type": "object",
+        "title": "triage_incidentArguments"
+      }
+    },
+    {
+      "name": "verify_receipt",
+      "description": "Verify a signed L7 receipt against the public ledger: recompute its hash and check the Ed25519 signature, returning VALID, TAMPERED, or NOT_FOUND. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "receipt_hash": {
+            "title": "Receipt Hash",
+            "type": "string"
+          }
+        },
+        "required": [
+          "receipt_hash"
+        ],
+        "type": "object",
+        "title": "verify_receiptArguments"
+      }
+    },
+    {
+      "name": "verify_receipt_chain",
+      "description": "Walk and verify the full hash-chained lineage of a receipt, every link's hash and signature checked. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "receipt_hash": {
+            "title": "Receipt Hash",
+            "type": "string"
+          }
+        },
+        "required": [
+          "receipt_hash"
+        ],
+        "type": "object",
+        "title": "verify_receipt_chainArguments"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.aleeth/authority-mcp",
+  "title": "ALEETH Authority MCP",
+  "description": "The first MCP governed by ICA. Every action is gated and sealed with a verifiable receipt.",
+  "version": "1.0.0",
+  "websiteUrl": "https://aleeth.com",
+  "repository": {
+    "url": "https://github.com/TheSchreckMethod/aleeth-authority-mcp-interface",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.aleeth.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "OAuth 2.0 bearer token. Discover the authorization server via RFC 9728 metadata at /.well-known/oauth-protected-resource. Read-only credentials available on request.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
