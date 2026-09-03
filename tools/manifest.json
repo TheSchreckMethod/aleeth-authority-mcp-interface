@@ -9,7 +9,7 @@
     "mcp_protocol_version": "2025-06-18",
     "source": "production"
   },
-  "tool_count": 37,
+  "tool_count": 41,
   "tools": [
     {
       "name": "approve_rule_candidate",
@@ -355,6 +355,66 @@
           "scope": "disposition:manage",
           "cost_class": "write",
           "default_charge_weight": 4
+        }
+      }
+    },
+    {
+      "name": "execute_governed_payment",
+      "description": "Authorize an agentic payment through the Payments Assurance Fabric. The Financial Capability Genome pre-checks the intent (registered tool, amount ceiling, and original-destination rule) and the live Rail Guard is the authority that allows the step and seals a signed L7 receipt. Always returns an Agentic Intent Receipt (AIR); a refusal is a DENIED AIR, never a fabricated seal. tool_id is a registered financial capability (payments.refund.issue, payments.payout.wire); original_destination lets the genome verify a refund returns to where the funds came from. High-consequence governed control; requires a payment-execute scope.",
+      "input_schema": {
+        "properties": {
+          "agent_id": {
+            "title": "Agent Id",
+            "type": "string"
+          },
+          "tool_id": {
+            "title": "Tool Id",
+            "type": "string"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "number"
+          },
+          "destination": {
+            "title": "Destination",
+            "type": "string"
+          },
+          "original_destination": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Original Destination"
+          }
+        },
+        "required": [
+          "agent_id",
+          "tool_id",
+          "amount",
+          "destination"
+        ],
+        "type": "object",
+        "title": "execute_governed_paymentArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Execute Governed Payment"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "payment:execute",
+          "cost_class": "control",
+          "default_charge_weight": 8
         }
       }
     },
@@ -750,6 +810,43 @@
           "cost_class": "read",
           "default_charge_weight": 1,
           "cacheable_ttl_s": 300
+        }
+      }
+    },
+    {
+      "name": "get_governance_fingerprint",
+      "description": "Compose one governed snapshot of an entity's governance posture: trust score and band, open incident count, the caller's live query budget, and the governed tool surface. Two reads in one governed call. Read-only, fully governed.",
+      "input_schema": {
+        "properties": {
+          "entity": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Entity"
+          }
+        },
+        "type": "object",
+        "title": "get_governance_fingerprintArguments"
+      },
+      "annotations": {
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Governance Fingerprint"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "governance:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
         }
       }
     },
@@ -1286,6 +1383,76 @@
           "scope": "agent:control",
           "cost_class": "control",
           "default_charge_weight": 8
+        }
+      }
+    },
+    {
+      "name": "run_l7_audit",
+      "description": "Run a standing L7 self-audit: read the head of the evidence ledger, verify its hash-chain, check the live resilience state, and grade PASS / WATCH / FAIL. The graded result is sealed in this call's own signed receipt. On FAIL it OPENS a real incident (deduped) and names the l7-audit-fail runbook. A governed write; operator scope.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "run_l7_auditArguments"
+      },
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Run L7 Self-Audit"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "audit:run",
+          "cost_class": "write",
+          "default_charge_weight": 1
+        }
+      }
+    },
+    {
+      "name": "simulate_governed_call",
+      "description": "Dry-run the governance decision for a hypothetical call to another tool: the would-be verdict, required scope, risk class, and reversibility, with NO side effect and no upstream call. Still fully governed and budget-charged itself, so it is never a free policy-probing oracle. Read-only.",
+      "input_schema": {
+        "properties": {
+          "target_tool": {
+            "title": "Target Tool",
+            "type": "string"
+          },
+          "args": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Args"
+          }
+        },
+        "required": [
+          "target_tool"
+        ],
+        "type": "object",
+        "title": "simulate_governed_callArguments"
+      },
+      "annotations": {
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Simulate Governed Call"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "governance:simulate",
+          "cost_class": "read",
+          "default_charge_weight": 1
         }
       }
     },

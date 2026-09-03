@@ -2,6 +2,14 @@
 
 Registry entry: `com.aleeth/authority-mcp`. Dates are UTC.
 
+## 1.1.0 (2026-09-02 live re-export)
+
+- Production catalog re-exported from `https://mcp.aleeth.com/mcp` after Railway
+  SUCCESS on `db85935` (Payments Assurance Fabric hardening). `tool_count` is 41.
+  New control: `execute_governed_payment` (scope `payment:execute`, irreversible,
+  default charge weight 8). Source remains `"production"`. Product version is
+  still 1.1.0; the digest of the built-in policy did not move.
+
 ## 1.1.0 (2026-07-24, deployed and live)
 
 - Wire identity fixed: the server now reports the product version (1.1.0) in
