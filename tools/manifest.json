@@ -9,8 +9,41 @@
     "mcp_protocol_version": "2025-06-18",
     "source": "production"
   },
-  "tool_count": 41,
+  "tool_count": 51,
   "tools": [
+    {
+      "name": "approve_hold",
+      "description": "Approve a hold. Replays the stored request through govern so the receipt seals execution.",
+      "input_schema": {
+        "properties": {
+          "hold_id": {
+            "title": "Hold Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "hold_id"
+        ],
+        "type": "object",
+        "title": "approve_holdArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Approve Hold"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "hold:approve",
+          "cost_class": "control",
+          "default_charge_weight": 8
+        }
+      }
+    },
     {
       "name": "approve_rule_candidate",
       "description": "Approve a proposed compliance-rule candidate, promoting it to an active rule. Governed write; requires a rule-governance scope.",
@@ -360,7 +393,7 @@
     },
     {
       "name": "execute_governed_payment",
-      "description": "Authorize an agentic payment through the Payments Assurance Fabric. The Financial Capability Genome pre-checks the intent (registered tool, amount ceiling, and original-destination rule) and the live Rail Guard is the authority that allows the step and seals a signed L7 receipt. Always returns an Agentic Intent Receipt (AIR); a refusal is a DENIED AIR, never a fabricated seal. tool_id is a registered financial capability (payments.refund.issue, payments.payout.wire); original_destination lets the genome verify a refund returns to where the funds came from. High-consequence governed control; requires a payment-execute scope.",
+      "description": "Authorize an agentic payment through the Payments Assurance Fabric. The Financial Capability Genome pre-checks the intent (registered tool, currency-denominated amount ceiling, and original-destination rule); the PaymentIntentStore mints one durable payment_intent_id per idempotency_key and refuses a changed-payload retry or a duplicate; an irreversible or red-tier intent is held for a second principal (approve_hold) and does not run here. Always returns an Agentic Intent Receipt (AIR); a refusal or a hold is a DENIED or HELD AIR, never a fabricated seal. A sealed release is handed to the configured payment rail adapter (the recorded sandbox in this build), which commits under the seal or refuses; its answer rides the AIR as dispatch, and a dispatch is not a settlement. tool_id is a registered financial capability (payments.refund.issue, payments.payout.wire); currency is a three-letter ISO 4217 code; idempotency_key is the caller's stable key across retries of one logical payment; execution_mode is IMMEDIATE or SCHEDULED (scheduled_execution_at required when SCHEDULED). High-consequence governed control; requires a payment-execute scope.",
       "input_schema": {
         "properties": {
           "agent_id": {
@@ -375,8 +408,16 @@
             "title": "Amount",
             "type": "number"
           },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
           "destination": {
             "title": "Destination",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "title": "Idempotency Key",
             "type": "string"
           },
           "original_destination": {
@@ -390,13 +431,32 @@
             ],
             "default": null,
             "title": "Original Destination"
+          },
+          "execution_mode": {
+            "default": "IMMEDIATE",
+            "title": "Execution Mode",
+            "type": "string"
+          },
+          "scheduled_execution_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Scheduled Execution At"
           }
         },
         "required": [
           "agent_id",
           "tool_id",
           "amount",
-          "destination"
+          "currency",
+          "destination",
+          "idempotency_key"
         ],
         "type": "object",
         "title": "execute_governed_paymentArguments"
@@ -932,6 +992,70 @@
       }
     },
     {
+      "name": "get_payment_case",
+      "description": "Read a payment or destination-change case. No raw destination.",
+      "input_schema": {
+        "properties": {
+          "case_id": {
+            "title": "Case Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "type": "object",
+        "title": "get_payment_caseArguments"
+      },
+      "annotations": {
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Payment Case"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "payments:read",
+          "cost_class": "read",
+          "default_charge_weight": 2
+        }
+      }
+    },
+    {
+      "name": "get_task_contract",
+      "description": "Read a TaskContract by task_id.",
+      "input_schema": {
+        "properties": {
+          "task_id": {
+            "title": "Task Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "task_id"
+        ],
+        "type": "object",
+        "title": "get_task_contractArguments"
+      },
+      "annotations": {
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "Get Task Contract"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "task:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
+      }
+    },
+    {
       "name": "get_trust_score",
       "description": "Read the ledger-derived trust score (0-1000 composite and band) for an entity. Read-only, fully governed.",
       "input_schema": {
@@ -1125,6 +1249,49 @@
       }
     },
     {
+      "name": "lift_payment_freeze",
+      "description": "Lift the MCP's own transparency-log equivocation freeze after human review: the reviewing operator (the caller) plus a distinct named witness and a reason. Governed and receipted. A freeze latched on ICA Command is lifted there, not here.",
+      "input_schema": {
+        "properties": {
+          "log_id": {
+            "title": "Log Id",
+            "type": "string"
+          },
+          "witness": {
+            "title": "Witness",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "log_id",
+          "witness",
+          "reason"
+        ],
+        "type": "object",
+        "title": "lift_payment_freezeArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Lift Payment Freeze"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "freeze:lift",
+          "cost_class": "control",
+          "default_charge_weight": 8
+        }
+      }
+    },
+    {
       "name": "list_active_halts",
       "description": "List the agents currently halted in ICA quarantine, with reasons. Read-only, fully governed.",
       "input_schema": {
@@ -1216,6 +1383,30 @@
       }
     },
     {
+      "name": "list_holds",
+      "description": "List pending holds for the calling principal.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "list_holdsArguments"
+      },
+      "annotations": {
+        "openWorldHint": false,
+        "readOnlyHint": true,
+        "title": "List Holds"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "hold:read",
+          "cost_class": "read",
+          "default_charge_weight": 1
+        }
+      }
+    },
+    {
       "name": "list_skills_and_tools",
       "description": "Read the ALEETH Academy Tools & Skills Registry: every skill and tool rated across six ICA control dimensions with compliance status and signed attestation. Optional kind filter ('skill' or 'tool'). Read-only, fully governed.",
       "input_schema": {
@@ -1254,6 +1445,119 @@
       }
     },
     {
+      "name": "open_task_contract",
+      "description": "Open a TaskContract: declared intent, allowed tools, call ceiling, expiry.",
+      "input_schema": {
+        "properties": {
+          "declared_intent": {
+            "title": "Declared Intent",
+            "type": "string"
+          },
+          "allowed_tools_csv": {
+            "title": "Allowed Tools Csv",
+            "type": "string"
+          },
+          "max_calls": {
+            "default": 24,
+            "title": "Max Calls",
+            "type": "integer"
+          },
+          "ttl_seconds": {
+            "default": 14400,
+            "title": "Ttl Seconds",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "declared_intent",
+          "allowed_tools_csv"
+        ],
+        "type": "object",
+        "title": "open_task_contractArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Open Task Contract"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "task:write",
+          "cost_class": "write",
+          "default_charge_weight": 2
+        }
+      }
+    },
+    {
+      "name": "proxy_downstream_tool",
+      "description": "Govern an arbitrary downstream MCP tools/call or OpenAI tool call. Allowlisted hosts only. High blast-radius acts return a hold_id and do not run.",
+      "input_schema": {
+        "properties": {
+          "protocol": {
+            "title": "Protocol",
+            "type": "string"
+          },
+          "endpoint": {
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          },
+          "arguments_json": {
+            "default": "{}",
+            "title": "Arguments Json",
+            "type": "string"
+          },
+          "task_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Task Id"
+          },
+          "dry_run": {
+            "default": false,
+            "title": "Dry Run",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "protocol",
+          "endpoint",
+          "tool_name"
+        ],
+        "type": "object",
+        "title": "proxy_downstream_toolArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Proxy Downstream Tool"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "downstream:proxy",
+          "cost_class": "control",
+          "default_charge_weight": 4
+        }
+      }
+    },
+    {
       "name": "ratify_finding",
       "description": "Ratify a compliance finding: accept it as real and record the fix plan. Governed write; requires a disposition scope.",
       "input_schema": {
@@ -1287,6 +1591,82 @@
           "reversibility": "reversible",
           "scope": "disposition:manage",
           "cost_class": "write",
+          "default_charge_weight": 4
+        }
+      }
+    },
+    {
+      "name": "reconcile_payment_intent",
+      "description": "Reconcile a released payment intent to its terminal state (settled, failed, canceled, returned) from rail evidence. Governed and receipted; reopens the no-duplicate window for that instruction. The paying principal cannot reconcile its own.",
+      "input_schema": {
+        "properties": {
+          "idempotency_key": {
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "evidence_ref": {
+            "title": "Evidence Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "idempotency_key",
+          "status",
+          "evidence_ref"
+        ],
+        "type": "object",
+        "title": "reconcile_payment_intentArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Reconcile Payment Intent"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "payment:reconcile",
+          "cost_class": "control",
+          "default_charge_weight": 8
+        }
+      }
+    },
+    {
+      "name": "reject_hold",
+      "description": "Reject a pending hold. The original act never runs.",
+      "input_schema": {
+        "properties": {
+          "hold_id": {
+            "title": "Hold Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "hold_id"
+        ],
+        "type": "object",
+        "title": "reject_holdArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Reject Hold"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "reversible",
+          "scope": "hold:approve",
+          "cost_class": "control",
           "default_charge_weight": 4
         }
       }
@@ -1381,6 +1761,71 @@
           "receipted": true,
           "reversibility": "irreversible",
           "scope": "agent:control",
+          "cost_class": "control",
+          "default_charge_weight": 8
+        }
+      }
+    },
+    {
+      "name": "request_destination_change",
+      "description": "Request a vendor destination change. Callback-from-request is held, not applied.",
+      "input_schema": {
+        "properties": {
+          "vendor_id": {
+            "title": "Vendor Id",
+            "type": "string"
+          },
+          "proposed_destination": {
+            "title": "Proposed Destination",
+            "type": "string"
+          },
+          "prior_destination": {
+            "title": "Prior Destination",
+            "type": "string"
+          },
+          "callback_source": {
+            "title": "Callback Source",
+            "type": "string"
+          },
+          "case_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Case Id"
+          },
+          "request_carries_callback": {
+            "default": false,
+            "title": "Request Carries Callback",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "vendor_id",
+          "proposed_destination",
+          "prior_destination",
+          "callback_source"
+        ],
+        "type": "object",
+        "title": "request_destination_changeArguments"
+      },
+      "annotations": {
+        "destructiveHint": true,
+        "openWorldHint": false,
+        "readOnlyHint": false,
+        "title": "Request Destination Change"
+      },
+      "_meta": {
+        "aleeth/governance": {
+          "rail_guarded": true,
+          "receipted": true,
+          "reversibility": "irreversible",
+          "scope": "payments:destination",
           "cost_class": "control",
           "default_charge_weight": 8
         }

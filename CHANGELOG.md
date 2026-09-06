@@ -2,6 +2,23 @@
 
 Registry entry: `com.aleeth/authority-mcp`. Dates are UTC.
 
+## 1.1.0 (2026-09-06 live re-export)
+
+- Production catalog re-exported from `https://mcp.aleeth.com/mcp` at commit
+  `ae5748dc` by the server's live check (run 34001447098), which now exports
+  the manifest with the maker credential it already holds and keeps it as a
+  run artifact; no Mac session was involved. `tool_count` is 51: the 41 base
+  tools plus the 10 Astra plane tools the deployed server declares
+  (`proxy_downstream_tool`, `open_task_contract`, `get_task_contract`,
+  `list_holds`, `approve_hold`, `reject_hold`, `request_destination_change`,
+  `get_payment_case`, `reconcile_payment_intent`, `lift_payment_freeze`).
+  `execute_governed_payment` now declares `currency`, `idempotency_key`,
+  `execution_mode` and `scheduled_execution_at`, and its description names
+  the payment rail adapter hand-off (a sealed release is committed by the
+  configured adapter, the recorded sandbox in this build, and the answer
+  rides the receipt as `dispatch`). Source is `"production"`. Product version
+  is still 1.1.0; the digest of the built-in policy did not move.
+
 ## 1.1.0 (2026-09-02 live re-export)
 
 - Production catalog re-exported from `https://mcp.aleeth.com/mcp` after Railway

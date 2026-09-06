@@ -15,7 +15,7 @@ Ed25519 receipt on a hash-chained ledger anchored to Bitcoin via OpenTimestamps.
 fails closed: if governance cannot run or the receipt cannot be written, the call does not
 return a result.
 
-- 41 governed tools (see [`tools/manifest.json`](tools/manifest.json))
+- 51 governed tools: 41 base tools and the 10 Astra plane tools the deployed server declares (see [`tools/manifest.json`](tools/manifest.json))
 - Transport: MCP streamable HTTP, TLS only
 - Authentication: OAuth 2.0 bearer tokens; discovery per RFC 9728 at
   `https://mcp.aleeth.com/.well-known/oauth-protected-resource`
@@ -26,7 +26,7 @@ return a result.
 | File | What it is | How it is produced |
 |---|---|---|
 | [`server.json`](server.json) | The manifest published to the official MCP registry | Maintained by ALEETH, versioned here |
-| [`tools/manifest.json`](tools/manifest.json) | All 41 tools: names, descriptions, input schemas | GENERATED from the live server by an export script; never hand-edited, so it cannot drift from what the server actually serves |
+| [`tools/manifest.json`](tools/manifest.json) | All 51 tools: names, descriptions, input schemas | GENERATED from the live server by an export script, run by the server's own live check against `https://mcp.aleeth.com/mcp`; never hand-edited, so it cannot drift from what the server actually serves |
 | [`CHANGELOG.md`](CHANGELOG.md) | Version history | Curated from the implementation repository's history |
 | [`SECURITY.md`](SECURITY.md) | Disclosure contact and security posture | Maintained by ALEETH |
 
