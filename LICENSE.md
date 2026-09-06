@@ -1,6 +1,6 @@
 # License
 
-Copyright (c) 2026 The Schreck Group, Inc., d/b/a ALEETH. All rights reserved.
+Copyright (c) 2026 The Schreck Group, Inc. All rights reserved. ALEETH is a brand of The Schreck Group, Inc.
 
 The contents of this repository (interface definitions, tool manifests, documentation, and
 provenance records) are published so that anyone may:
